@@ -2,10 +2,10 @@ const startBtnRef = document.querySelector('button[data-start]');
 const stopBtnRef = document.querySelector('button[data-stop]');
 let timerId = null;
 
-startBtnRef.addEventListener('click', onStarColorSwitcher);
+startBtnRef.addEventListener('click', onStartColorSwitcher);
 stopBtnRef.addEventListener('click', onStopColorSwitcher);
 
-function onStarColorSwitcher() {
+function onStartColorSwitcher() {
   timerId = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
