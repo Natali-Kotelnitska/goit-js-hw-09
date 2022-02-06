@@ -13,6 +13,7 @@ function onSubmit(e) {
 
   getPromises(promisesAmount, firstDelay, delayStep);
 }
+
 function getOutput(delay, step, amount) {
   let delayStep = Number(step.value);
   let firstDelay = Number(delay.value);
