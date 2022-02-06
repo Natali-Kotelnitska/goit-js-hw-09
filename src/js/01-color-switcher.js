@@ -9,13 +9,13 @@ function onStartColorSwitcher() {
   timerId = setInterval(() => {
     document.body.style.backgroundColor = getRandomHexColor();
   }, 1000);
-
+  stopBtnRef.removeAttribute('disabled');
   startBtnRef.setAttribute('disabled', 'disabled');
 }
 
 function onStopColorSwitcher() {
   clearInterval(timerId);
-  document.body.style.backgroundColor = '';
+  stopBtnRef.setAttribute('disabled', 'disabled');
   startBtnRef.removeAttribute('disabled');
 }
 
