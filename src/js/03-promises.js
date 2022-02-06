@@ -1,3 +1,4 @@
+import Notiflix from 'notiflix';
 const formRef = document.querySelector('.form');
 const formData = {};
 formRef.addEventListener('submit', onSubmit);
@@ -42,10 +43,20 @@ function createPromise(position, delay) {
 
   promise
     .then(result => {
-      console.log(`✅ Fulfilled promise ${result.position} in ${result.delay}ms`);
+      Notiflix.Notify.success(`✅ Fulfilled promise ${result.position} in ${result.delay}ms`, {
+        timeout: 10000,
+        clickToClose: true,
+        useIcon: false,
+      });
+      // console.log(`✅ Fulfilled promise ${result.position} in ${result.delay}ms`);
     })
     .catch(({ position, delay }) => {
-      console.log(`❌ Rejected promise ${position} in ${delay}ms`);
+      Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
+        timeout: 10000,
+        clickToClose: true,
+        useIcon: false,
+      });
+      // console.log(`❌ Rejected promise ${position} in ${delay}ms`);
     });
   return promise;
 }

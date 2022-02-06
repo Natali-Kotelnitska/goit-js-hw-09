@@ -2,6 +2,9 @@
 import flatpickr from 'flatpickr';
 // Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
+// import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import Notiflix from 'notiflix';
+
 const refs = {
   startBtn: document.querySelector('button[data-start]'),
   days: document.querySelector('[data-days]'),
@@ -10,9 +13,6 @@ const refs = {
   seconds: document.querySelector('[data-seconds]'),
   input: document.querySelector('#datetime-picker'),
 };
-let dateTimeValue = refs.input.value;
-console.log(dateTimeValue);
-refs.startBtn.setAttribute('disabled', 'disabled');
 
 const fp = flatpickr('#datetime-picker', {
   enableTime: true,
@@ -21,25 +21,31 @@ const fp = flatpickr('#datetime-picker', {
   minuteIncrement: 1,
   onClose(selectedDates) {
     refs.startBtn.removeAttribute('disabled');
-    // console.log(selectedDate);
+    console.log(selectedDates[0]);
+
     if (selectedDates[0] < Date.now()) {
-      alert('Please choose a date in the future');
+      Notiflix.Notify.failure('Please choose a date in the future', {
+        timeout: 3000,
+        closeButton: true,
+        clickToClose: true,
+        useIcon: false,
+      });
+      // alert('Please choose a date in the future');
     }
   },
 });
 
-// console.log(dateSelected);
 class CountdownTimer {
-  constructor({ onTick, targetDate }) {
+  constructor({ onTick, targetDate, selector }) {
     this.targetDate = targetDate;
     this.intervalID = null;
-    this.active = false;
+    this.selector = selector;
     this.onTick = onTick;
     this.init();
   }
-  // refs.startBtn.setAttribute('disabled', 'disabled');
 
   init() {
+    refs.startBtn.setAttribute('disabled', 'disabled');
     const time = this.convertMs(0);
     this.onTick(time);
   }
@@ -65,11 +71,11 @@ class CountdownTimer {
       //   }
     }, 1000);
   }
-  stop() {
-    clearInterval(this.intervalID);
-    const time = this.convertMs(0);
-    this.onTick(time);
-  }
+  // stop() {
+  //   clearInterval(this.intervalID);
+  //   const time = this.convertMs(0);
+  //   this.onTick(time);
+  // }
 
   convertMs(ms) {
     // Number of milliseconds per unit of time
@@ -94,10 +100,12 @@ class CountdownTimer {
     return String(value).padStart(2, '0');
   }
 }
-console.log(fp.selectedDates[0]);
+console.log(fp.selectedDates);
+
 const timer = new CountdownTimer({
+  selector: '#datetime-picker',
   onTick: updateClockface,
-  targetDate: new Date('Feb 06, 2022 01:03'),
+  targetDate: new Date('Feb 06, 2022 11:37'),
   // targetDate: fp.onClose(),
 });
 
