@@ -15,8 +15,22 @@ function onSubmit(e) {
   let firstDelay = Number(delay.value);
   let promisesAmount = Number(amount.value);
 
-  getPosition(promisesAmount).map(el => {
-    createPromise(el, firstDelay);
+  getPosition(promisesAmount).forEach(el => {
+    createPromise(el, firstDelay)
+      .then(result => {
+        Notiflix.Notify.success(`✅ Fulfilled promise ${result.position} in ${result.delay}ms`, {
+          timeout: 10000,
+          clickToClose: true,
+          useIcon: false,
+        });
+      })
+      .catch(({ position, delay }) => {
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
+          timeout: 10000,
+          clickToClose: true,
+          useIcon: false,
+        });
+      });
     return (firstDelay += delayStep);
   });
 }
@@ -41,21 +55,5 @@ function createPromise(position, delay) {
       reject({ position, delay });
     }, delay);
   });
-
-  promise
-    .then(result => {
-      Notiflix.Notify.success(`✅ Fulfilled promise ${result.position} in ${result.delay}ms`, {
-        timeout: 10000,
-        clickToClose: true,
-        useIcon: false,
-      });
-    })
-    .catch(({ position, delay }) => {
-      Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
-        timeout: 10000,
-        clickToClose: true,
-        useIcon: false,
-      });
-    });
   return promise;
 }
