@@ -100,7 +100,6 @@ const timer = new CountdownTimer({
 
 refs.startBtn.addEventListener('click', onStartTimer);
 function onStartTimer() {
-  console.log(targetDate);
   timer.start(targetDate);
 }
 
