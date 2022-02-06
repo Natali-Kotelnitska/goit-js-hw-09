@@ -1,4 +1,5 @@
 import Notiflix from 'notiflix';
+
 const formRef = document.querySelector('.form');
 const formData = {};
 formRef.addEventListener('submit', onSubmit);
@@ -48,7 +49,6 @@ function createPromise(position, delay) {
         clickToClose: true,
         useIcon: false,
       });
-      // console.log(`✅ Fulfilled promise ${result.position} in ${result.delay}ms`);
     })
     .catch(({ position, delay }) => {
       Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`, {
@@ -56,7 +56,6 @@ function createPromise(position, delay) {
         clickToClose: true,
         useIcon: false,
       });
-      // console.log(`❌ Rejected promise ${position} in ${delay}ms`);
     });
   return promise;
 }

@@ -2,7 +2,6 @@
 import flatpickr from 'flatpickr';
 // Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import Notiflix from 'notiflix';
 
 const refs = {
@@ -30,7 +29,6 @@ const fp = flatpickr('#datetime-picker', {
         clickToClose: true,
         useIcon: false,
       });
-      // alert('Please choose a date in the future');
     }
   },
 });
@@ -65,17 +63,8 @@ class CountdownTimer {
       }
       const time = this.convertMs(deltaTime);
       this.onTick(time);
-
-      //   if (this.deltaTime < 0) {
-      //     this.stop();
-      //   }
     }, 1000);
   }
-  // stop() {
-  //   clearInterval(this.intervalID);
-  //   const time = this.convertMs(0);
-  //   this.onTick(time);
-  // }
 
   convertMs(ms) {
     // Number of milliseconds per unit of time
@@ -105,7 +94,7 @@ console.log(fp.selectedDates);
 const timer = new CountdownTimer({
   selector: '#datetime-picker',
   onTick: updateClockface,
-  targetDate: new Date('Feb 06, 2022 11:37'),
+  // targetDate: new Date('Feb 06, 2022 11:37'),
   // targetDate: fp.onClose(),
 });
 
