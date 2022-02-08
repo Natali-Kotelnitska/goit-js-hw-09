@@ -19,22 +19,26 @@ const fp = flatpickr('#datetime-picker', {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    refs.startBtn.removeAttribute('disabled');
     console.log(selectedDates[0]);
     targetDate = selectedDates[0];
 
     if (selectedDates[0] < Date.now()) {
+      refs.startBtn.disabled = true;
       Notiflix.Notify.failure('Please choose a date in the future', {
-        timeout: 3000,
-        closeButton: true,
+        timeout: 4000,
+        // closeButton: true,
         clickToClose: true,
         useIcon: false,
       });
+    } else {
+      refs.startBtn.disabled = false;
     }
   },
 });
 
 let targetDate;
+
+refs.startBtn.disabled = true;
 
 class CountdownTimer {
   constructor({ onTick, selector }) {
@@ -45,20 +49,20 @@ class CountdownTimer {
   }
 
   init() {
-    refs.startBtn.setAttribute('disabled', 'disabled');
+    refs.startBtn.disabled = true;
     const time = this.convertMs(0);
     this.onTick(time);
   }
 
   start() {
-    refs.startBtn.setAttribute('disabled', 'disabled');
-
     this.intervalID = setInterval(() => {
       const currentTime = Date.now();
       const deltaTime = targetDate - currentTime;
-      console.log(targetDate);
+      // console.log(targetDate);
+      // console.log(deltaTime);
 
-      if (this.deltaTime < 0) {
+      if (deltaTime <= 0) {
+        console.log(deltaTime);
         clearInterval(this.intervalID);
         const time = this.convertMs(0);
         this.onTick(time);
